@@ -1,5 +1,5 @@
 <template>
-  <div class="card-handler">
+  <div class="card collapsed" @click="onCardClick">
     <!-- <MdCard @click.native="onItemClick" class="md-with-hover"> -->
 
     <div class="card-image" :style="imageStyle">
@@ -33,12 +33,22 @@ export default {
     };
   },
   methods: {
-    onAction1Click() {
+    // action handlers
+    onAction1Click(e) {
+      e.stopPropagation();
       console.log("click1");
     },
-    onAction2Click() {
+    onAction2Click(e) {
+      e.stopPropagation();
       console.log("click2");
     },
+    onCardClick(e) {
+      console.log("card");
+      console.log(e);
+      e.target.classList.toggle("collapsed");
+      e.target.classList.toggle("expanded");
+    },
+    //
     resolveImageUrl: function (name) {
       let images = require.context("@/assets/", false, /\.png$|\.jpg$/);
       return images("./" + name);
@@ -71,9 +81,8 @@ export default {
 </script>
 
 <style scoped>
-.card-handler {
+.card {
   background-color: rgb(150, 40, 220);
-  height: 50px;
   display: flex;
   flex-direction: row;
   margin: 5px 5px 0 5px;
@@ -82,6 +91,14 @@ export default {
   border-radius: 4px;
   align-items: center;
   justify-content: space-between;
+}
+
+.card.collapsed {
+  height: 50px;
+}
+
+.card.expanded {
+  height: 200px;
 }
 
 .card-image {
@@ -138,12 +155,12 @@ export default {
   margin: 2px 0;
 }
 
-.card-handler:hover {
+.card:hover {
   transform: scale(1.01);
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.5);
 }
 
-.card-handler:hover .card-actions {
+.card:hover .card-actions {
   color: black;
   opacity: 1;
   transform: translateX(0);
