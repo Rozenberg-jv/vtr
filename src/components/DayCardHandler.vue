@@ -1,5 +1,5 @@
 <template>
-  <div class="day-card-handler">
+  <div class="day-cards-handler">
     <DayCard
       v-for="cardData in cardsData"
       :key="cardData.id"
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style>
-.day-card-handler {
+.day-cards-handler {
   width: 600px;
   min-height: 150px;
   display: flex;
@@ -31,5 +31,6 @@ export default {
   background-color: rgba(75, 75, 200, 0.9);
   color: white;
   border-radius: 4px;
+  padding-bottom: 5px;
 }
 </style>

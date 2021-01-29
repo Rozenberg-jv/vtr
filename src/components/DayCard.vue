@@ -6,11 +6,11 @@
       <!-- <img :src="resolveImageUrl(cardData.imageUrl)" /> -->
     </div>
 
-    <div class="card-title">
+    <div class="card-title" v-if="!computeIsChecked">
       <p>{{ cardData.title }}</p>
     </div>
 
-    <div class="card-content" v-if="false">
+    <div class="card-content" v-else>
       <p>{{ cardData.text }}</p>
     </div>
 
@@ -30,23 +30,22 @@ export default {
   data() {
     return {
       defaultImageName: "task01.png",
+      isChecked: false,
     };
   },
   methods: {
     // action handlers
     onAction1Click(e) {
       e.stopPropagation();
-      console.log("click1");
     },
     onAction2Click(e) {
       e.stopPropagation();
-      console.log("click2");
     },
-    onCardClick(e) {
-      console.log("card");
-      console.log(e);
-      e.target.classList.toggle("collapsed");
-      e.target.classList.toggle("expanded");
+    onCardClick() {
+      this.isChecked = !this.isChecked;
+
+      this.$el.classList.toggle("collapsed");
+      this.$el.classList.toggle("expanded");
     },
     //
     resolveImageUrl: function (name) {
@@ -60,6 +59,7 @@ export default {
       id: { type: Number, require: true },
       title: { type: String, require: false },
       text: { type: String, require: true },
+      date: { type: String, require: true },
     },
   },
   computed: {
@@ -75,6 +75,9 @@ export default {
       let image = this.resolveImageUrl(imageIs || this.defaultImageName);
 
       return `url(${image})`;
+    },
+    computeIsChecked() {
+      return this.isChecked;
     },
   },
 };
@@ -155,6 +158,7 @@ export default {
   margin: 2px 0;
 }
 
+/*  */
 .card:hover {
   transform: scale(1.01);
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.5);
@@ -164,5 +168,10 @@ export default {
   color: black;
   opacity: 1;
   transform: translateX(0);
+}
+
+.card-actions button:active,
+.card-actions button:focus {
+  outline: none;
 }
 </style>

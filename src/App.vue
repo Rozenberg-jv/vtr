@@ -1,18 +1,18 @@
 <template>
   <div id="app">
     <Header />
-    <DayCardHandler :cardsData="mockCardsData" />
+    <DaysSwiper :daysData="reduceDaysDataByDate(mockCardsData)"/>
   </div>
 </template>
 
 <script>
-import DayCardHandler from "./components/DayCardHandler.vue";
+import DaysSwiper from "./components/DaysSwiper.vue";
 import Header from "./components/Header.vue";
 
 export default {
   name: "App",
   components: {
-    DayCardHandler,
+    DaysSwiper,
     Header,
   },
   data() {
@@ -23,6 +23,7 @@ export default {
           title: "title1",
           text: "text1",
           imageUrl: "logo.png",
+          date: "05.06.2021",
         },
         {
           id: 2,
@@ -30,21 +31,40 @@ export default {
           text:
             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.",
           imageUrl: "logo.png",
+          date: "05.06.2021",
         },
         {
           id: 3,
           title: "title3",
           text:
             "1) Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non. 2) Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non. 3) Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.",
+          date: "05.06.2021",
         },
         {
           id: 4,
           title: "title4",
           text:
             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.",
+          date: "05.06.2021",
         },
       ],
     };
+  },
+  methods: {
+    reduceDaysDataByDate(daysData) {
+      let result = daysData.reduce((acc, item) => {
+        let date = item.date.split(" ")[0];
+        if (acc[date]) {
+          acc[date].push(item);
+        } else {
+          acc[date] = [item];
+        }
+        return acc;
+      }, {});
+
+      console.log(result);
+      return result;
+    },
   },
 };
 </script>
